@@ -313,7 +313,7 @@ class MainTest {
     @DisplayName("AccountService::find")
     void testFindAccount_AccountService() {
         when(mockAccountRepository.findById(1L)).thenReturn(Optional.of(sampleAccountForAccountServiceTest));
-        Account result = accountService.find(1L);
+        Account result = accountService.findById(1L);
         assertEquals(sampleAccountForAccountServiceTest, result);
     }
 
@@ -355,7 +355,7 @@ class MainTest {
     @DisplayName("CustomerService::find")
     void testFindCustomer() {
         when(mockCustomerRepository.findById(1L)).thenReturn(Optional.of(sampleCustomerForCustomerServiceTest));
-        Customer result = customerService.find(1L);
+        Customer result = customerService.findById(1L);
         assertEquals(sampleCustomerForCustomerServiceTest, result);
     }
 

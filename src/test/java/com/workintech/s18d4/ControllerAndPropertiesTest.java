@@ -124,7 +124,7 @@ class ControllerAndPropertiesTest {
     @Test
     @DisplayName("AccountController::find")
     void testFindAccount() throws Exception {
-        when(accountService.find(sampleAccountForAccountControllerTest.getId())).thenReturn(sampleAccountForAccountControllerTest);
+        when(accountService.findById(sampleAccountForAccountControllerTest.getId())).thenReturn(sampleAccountForAccountControllerTest);
 
         mockMvc.perform(get("/account/{id}", sampleAccountForAccountControllerTest.getId()))
                 .andExpect(status().isOk())
@@ -132,13 +132,13 @@ class ControllerAndPropertiesTest {
                 .andExpect(jsonPath("$.id", is((int) sampleAccountForAccountControllerTest.getId())))
                 .andExpect(jsonPath("$.accountName", is(sampleAccountForAccountControllerTest.getAccountName())));
 
-        verify(accountService).find(sampleAccountForAccountControllerTest.getId());
+        verify(accountService).findById(sampleAccountForAccountControllerTest.getId());
     }
 
     @Test
     @DisplayName("AccountController::save")
     void testSaveAccount() throws Exception {
-        when(customerService.find(sampleCustomerForAccountControllerTest.getId())).thenReturn(sampleCustomerForAccountControllerTest);
+        when(customerService.findById(sampleCustomerForAccountControllerTest.getId())).thenReturn(sampleCustomerForAccountControllerTest);
         when(accountService.save(any())).thenReturn(sampleAccountForAccountControllerTest);
 
         mockMvc.perform(post("/account/{customerId}", sampleCustomerForAccountControllerTest.getId())
@@ -148,7 +148,7 @@ class ControllerAndPropertiesTest {
                 .andExpect(jsonPath("$.id", is((int) sampleAccountForAccountControllerTest.getId())))
                 .andExpect(jsonPath("$.accountName", is(sampleAccountForAccountControllerTest.getAccountName())));
 
-        verify(customerService).find(sampleCustomerForAccountControllerTest.getId());
+        verify(customerService).findById(sampleCustomerForAccountControllerTest.getId());
         verify(accountService).save(any());
     }
 
@@ -167,8 +167,8 @@ class ControllerAndPropertiesTest {
         accounts.add(sampleAccountForAccountControllerTest);
         sampleCustomerForAccountControllerTest.setAccounts(accounts);
 
-        when(customerService.find(customerId)).thenReturn(sampleCustomerForAccountControllerTest);
-        when(accountService.find(sampleAccountForAccountControllerTest.getId())).thenReturn(sampleAccountForAccountControllerTest);
+        when(customerService.findById(customerId)).thenReturn(sampleCustomerForAccountControllerTest);
+        when(accountService.findById(sampleAccountForAccountControllerTest.getId())).thenReturn(sampleAccountForAccountControllerTest);
         when(accountService.save(any())).thenReturn(updatedAccount);
 
         mockMvc.perform(put("/account/{customerId}", customerId)
@@ -179,7 +179,7 @@ class ControllerAndPropertiesTest {
                 .andExpect(jsonPath("$.accountName", is(updatedAccount.getAccountName())))
                 .andExpect(jsonPath("$.moneyAmount", is(updatedAccount.getMoneyAmount())));
 
-        verify(customerService).find(customerId);
+        verify(customerService).findById(customerId);
         given(customerService.save(any())).willReturn(sampleCustomerForAccountControllerTest);
     }
 
@@ -187,7 +187,7 @@ class ControllerAndPropertiesTest {
     @Test
     @DisplayName("AccountController::remove")
     void testRemoveAccount() throws Exception {
-        when(accountService.find(sampleAccountForAccountControllerTest.getId())).thenReturn(sampleAccountForAccountControllerTest);
+        when(accountService.findById(sampleAccountForAccountControllerTest.getId())).thenReturn(sampleAccountForAccountControllerTest);
         when(accountService.delete(sampleAccountForAccountControllerTest.getId())).thenReturn(sampleAccountForAccountControllerTest);
 
         mockMvc.perform(delete("/account/{id}", sampleAccountForAccountControllerTest.getId()))
@@ -196,7 +196,7 @@ class ControllerAndPropertiesTest {
                 .andExpect(jsonPath("$.accountName", is(sampleAccountForAccountControllerTest.getAccountName())))
                 .andExpect(jsonPath("$.moneyAmount", is(sampleAccountForAccountControllerTest.getMoneyAmount())));
 
-        verify(accountService).find(sampleAccountForAccountControllerTest.getId());
+        verify(accountService).findById(sampleAccountForAccountControllerTest.getId());
         verify(accountService).delete(sampleAccountForAccountControllerTest.getId());
     }
 
